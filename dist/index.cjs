@@ -2,15 +2,43 @@
 
 const DEFAULTS = {
   endpoint: 'http://127.0.0.1:8000/report',
+  helloEndpoint: null,
   source: 'js',
   captureFetch: true,
   captureResources: true,
   captureUnhandledRejections: true,
+  sendHello: true,
   dedupe: true,
   appName: null,
   release: null,
   beforeSend: null,
 };
+
+function _resolveHelloUrl(opts) {
+  if (opts.helloEndpoint) return opts.helloEndpoint;
+  return String(opts.endpoint || '').replace(/\/report\/?$/, '/hello');
+}
+
+function _sendHello() {
+  const opts = _opts;
+  if (!opts || !opts.sendHello) return;
+  const url = _resolveHelloUrl(opts);
+  if (!url) return;
+  const body = JSON.stringify({
+    app: opts.appName || null,
+    release: opts.release || null,
+    url: typeof location !== 'undefined' ? location.href : null,
+    user_agent: typeof navigator !== 'undefined' ? navigator.userAgent : null,
+  });
+  try {
+    if (typeof navigator !== 'undefined' && typeof navigator.sendBeacon === 'function') {
+      navigator.sendBeacon(url, new Blob([body], { type: 'application/json' }));
+    } else if (typeof fetch === 'function') {
+      const f = _origFetch || fetch;
+      f(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true, mode: 'cors' }).catch(() => {});
+    }
+  } catch (e) {}
+}
 
 let _opts = null;
 const _seen = new Set();
@@ -104,6 +132,7 @@ function init(options) {
   window.addEventListener('error', _onError, true);
   if (_opts.captureUnhandledRejections) window.addEventListener('unhandledrejection', _onRejection);
   if (_opts.captureFetch) _wrapFetch();
+  _sendHello();
 }
 
 function captureError(err, extra) {

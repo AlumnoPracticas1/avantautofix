@@ -10,6 +10,10 @@ export interface ErrorPayload {
 export interface InitOptions {
   /** URL del endpoint /report del orquestador HAM. Por defecto http://127.0.0.1:8000/report */
   endpoint?: string;
+  /** URL del endpoint /hello (registro). Si se omite, se deriva de `endpoint` reemplazando /report por /hello. */
+  helloEndpoint?: string | null;
+  /** Enviar un /hello al iniciar para registrar la página como "escuchando". Por defecto true. */
+  sendHello?: boolean;
   /** Etiqueta del origen. Por defecto "js". */
   source?: string;
   /** Capturar respuestas 4xx/5xx de fetch. Por defecto true. */
