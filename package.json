@@ -1,5 +1,5 @@
 {
-  "name": "ham-autofix-client",
+  "name": "avantautofix",
   "version": "0.1.0",
   "description": "Captura errores JS (window.error, unhandledrejection, fetch fallidos) y los envía al orquestador HAM Auto-Fix para diagnóstico y reparación con IA.",
   "keywords": ["error-tracking", "autofix", "ham", "ai", "monitoring", "ollama"],
@@ -27,6 +27,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-org/ham-autofix-client.git"
+    "url": "https://github.com/AlumnoPracticas1/avantautofix.git"
   }
 }
