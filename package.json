@@ -1,0 +1,32 @@
+{
+  "name": "ham-autofix-client",
+  "version": "0.1.0",
+  "description": "Captura errores JS (window.error, unhandledrejection, fetch fallidos) y los envía al orquestador HAM Auto-Fix para diagnóstico y reparación con IA.",
+  "keywords": ["error-tracking", "autofix", "ham", "ai", "monitoring", "ollama"],
+  "author": "HAM",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "browser": "./dist/index.umd.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "test": "echo \"sin tests\" && exit 0"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/ham-autofix-client.git"
+  }
+}
